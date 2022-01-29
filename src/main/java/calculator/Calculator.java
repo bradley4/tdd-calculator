@@ -1,5 +1,6 @@
 package calculator;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -9,7 +10,11 @@ public class Calculator {
         if (input.isEmpty()) {
             return 0;
         }
-        return 0; // 임시 return 문
+        int[] elements = split(input);
+
+        return Arrays
+                .stream(elements)
+                .sum();
     }
 
     int[] split(String input) {
@@ -20,7 +25,9 @@ public class Calculator {
             input = splittingResults[1];
             regex = splittingResults[0].replaceAll("//", "");
         }
+
         checkException(input, regex);
+
         String[] inputSplitComma = input.split(regex);
         int[] result =
                 Stream.of(inputSplitComma)
@@ -42,8 +49,10 @@ public class Calculator {
         sb.append(regex);
         sb.append("|0-9");
         String exceptionRegex = sb.toString();
+
         Pattern pattern = Pattern.compile(exceptionRegex);
         Matcher matcher = pattern.matcher(input);
+
         if (!matcher.find()) {
             throw new RuntimeException("구분자, 숫자 이외의 값(음수 포함)을 포함합니다.");
         }

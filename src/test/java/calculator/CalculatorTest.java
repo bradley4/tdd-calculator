@@ -81,4 +81,18 @@ public class CalculatorTest {
                 .hasMessageContaining("구분자, 숫자 이외의 값(음수 포함)을 포함합니다.");
     }
 
+    @DisplayName("배열의 원소의 합을 리턴한다.")
+    @Test
+    void plus_test() {
+        // given
+        Calculator calculator = new Calculator();
+        String input = "//;\n1;2";
+
+        // when
+        int result = calculator.plus(input);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(3);
+    }
+
 }
