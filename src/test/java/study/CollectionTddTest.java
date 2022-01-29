@@ -39,12 +39,17 @@ public class CollectionTddTest {
                 .isEqualTo(3);
     }
 
-    @DisplayName("contains() 메소드를 활용해 1, 2, 3의 값이 존재하는지를 확인하는 테스트")
+    @DisplayName("ParameterizedTest 어노테이션을 사용해 set에 해당 원소가 존재하는지를 확인하는 테스트(only True)")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void contains_test_0(int number) {
-        // then
-        assertTrue(numbers.contains(number));
-    }
+        // given
+        CollectionTdd collectionTdd = new CollectionTdd();
 
+        // when
+        boolean result = collectionTdd.contains(numbers, number);
+
+        // then
+        assertTrue(result);
+    }
 }
