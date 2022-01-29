@@ -15,6 +15,15 @@ public class StringTdd {
         return result;
     }
 
+    char charAt(String input, int index) throws StringIndexOutOfBoundsException {
+        if(input.length() <= index) {
+            throw new StringIndexOutOfBoundsException(
+                    String.format("index [%d]는 벗어난 인덱스입니다.", index)
+            );
+        }
+        return input.charAt(index);
+    }
+
     private String cleansingBrackets(String input) {
         char firstCharacterOfInput = input.charAt(0);
         char lastCharacterOfInput = input.charAt(input.length() - 1);
