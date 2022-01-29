@@ -19,4 +19,18 @@ public class CalculatorTest {
         // then
         Assertions.assertThat(result).isEqualTo(0);
     }
+
+    @DisplayName("쉼표(,) 또는 콜론(:)을 구분자로 분리된 배열을 리턴한다")
+    @Test
+    void split_comma_colon_test() {
+        // given
+        Calculator calculator = new Calculator();
+        String input = "1,2";
+
+        // when
+        int[] result = calculator.split(input);
+
+        // then
+        Assertions.assertThat(result).containsExactly(1,2);
+    }
 }
