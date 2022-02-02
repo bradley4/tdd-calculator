@@ -67,7 +67,7 @@ class CalculatorTest {
         boolean result = calculator.isCustomRegex(input);
 
         // then
-        Assertions.assertThat(result).isEqualTo(true);
+        Assertions.assertThat(result).isTrue();
     }
 
     @DisplayName("쉼표(,) 또는 콜론(:) 혹은 커스텀 구분자로 분리된 배열을 리턴한다")
