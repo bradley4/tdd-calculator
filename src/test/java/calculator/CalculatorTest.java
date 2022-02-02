@@ -94,11 +94,7 @@ class CalculatorTest {
         // when
 
         // then
-        Assertions.assertThatThrownBy(
-                () -> {
-                    calculator.split(input);
-                }
-        )
+        Assertions.assertThatThrownBy( () -> calculator.split(input))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("구분자, 숫자 이외의 값(음수 포함)을 포함합니다.");
     }

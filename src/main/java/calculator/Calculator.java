@@ -12,9 +12,7 @@ class Calculator {
         }
         int[] elements = split(textNumbers);
 
-        return Arrays
-                .stream(elements)
-                .sum();
+        return Arrays.stream(elements).sum();
     }
 
     int[] split(String textNumbers) {

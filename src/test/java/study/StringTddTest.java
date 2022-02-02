@@ -83,11 +83,7 @@ public class StringTddTest {
         // when
 
         // then
-        Assertions.assertThatThrownBy(
-                () -> {
-                    stringTdd.charAt(input, index);
-                }
-        )
+        Assertions.assertThatThrownBy(() -> stringTdd.charAt(input, index))
                 .isInstanceOf(StringIndexOutOfBoundsException.class)
                 .hasMessageContaining("index [%d]는 벗어난 인덱스입니다.", index);
     }
