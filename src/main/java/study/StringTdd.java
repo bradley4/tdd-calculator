@@ -8,7 +8,7 @@ public class StringTdd {
     private static final String COMMA = ",";
 
     int[] split(String input) {
-        input = cleansingBrackets(input);
+        input = removeBrackets(input);
 
         String[] inputSplitComma = input.split(COMMA);
         int[] result =
@@ -27,7 +27,7 @@ public class StringTdd {
         return input.charAt(index);
     }
 
-    private String cleansingBrackets(String input) {
+    private String removeBrackets(String input) {
         char firstCharacterOfInput = input.charAt(0);
         char lastCharacterOfInput = input.charAt(input.length() - 1);
 
