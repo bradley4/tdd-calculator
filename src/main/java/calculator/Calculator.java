@@ -11,7 +11,6 @@ class Calculator {
             return 0;
         }
         int[] elements = split(textNumbers);
-
         return Arrays.stream(elements).sum();
     }
 
@@ -39,7 +38,6 @@ class Calculator {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(textNumbers);
         return matcher.find();
-
     }
 
     void checkException(String textNumbers, String regex) {
@@ -54,7 +52,5 @@ class Calculator {
         if (!matcher.find()) {
             throw new RuntimeException("구분자, 숫자 이외의 값(음수 포함)을 포함합니다.");
         }
-
     }
-
 }
