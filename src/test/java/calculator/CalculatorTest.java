@@ -42,7 +42,7 @@ class CalculatorTest {
 
     }
 
-    @DisplayName("쉼표(,)를 구분자로 분리된 배열을 리턴한다")
+    @DisplayName("쉼표(,)와 콜론(:)를 구분자로 분리된 배열을 리턴한다")
     @ParameterizedTest
     @ValueSource(strings = {"1,2", "1:2"})
     void split_comma_colon_test(String input) {

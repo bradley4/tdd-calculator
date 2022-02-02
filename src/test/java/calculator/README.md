@@ -5,6 +5,8 @@
 - [x] 문자열 계산기에 숫자 이외의 값 또는 음수를 전달하는 경우 RuntimeException 예외를 throw한다.
 
 ## TODO
+- [ ] 띄어쓰기를 포함한 빈 값을 전달하면 0을 리턴한다.
+- [ ] null 값을 전달하면 NullPointerException을 리턴한다.
 
 ## DONE
 
@@ -14,5 +16,3 @@
   - 커스텀 구분자는 "//"와 "\n" 사이에 문자로 한다.
 - [x] 문자열 계산기에 숫자 이외의 값 또는 음수를 전달하는 경우 RuntimeException 예외처리한다.
 - [x] 배열의 원소의 합을 리턴한다.
-- [x] null 값을 전달하면 NullPointerException을 리턴한다.
-- [x] 띄어쓰기를 포함한 빈 값을 전달하면 0을 리턴한다.
