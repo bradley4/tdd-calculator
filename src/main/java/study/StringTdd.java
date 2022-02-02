@@ -3,11 +3,14 @@ package study;
 import java.util.stream.Stream;
 
 public class StringTdd {
+    private static final char LEFT_BRACKET = '(';
+    private static final char RIGHT_BRACKET = ')';
+    private static final String COMMA = ",";
 
     int[] split(String input) {
         input = cleansingBrackets(input);
 
-        String[] inputSplitComma = input.split(",");
+        String[] inputSplitComma = input.split(COMMA);
         int[] result =
                 Stream.of(inputSplitComma)
                         .mapToInt(Integer::parseInt)
@@ -28,7 +31,7 @@ public class StringTdd {
         char firstCharacterOfInput = input.charAt(0);
         char lastCharacterOfInput = input.charAt(input.length() - 1);
 
-        if (firstCharacterOfInput != '(' || lastCharacterOfInput != ')') {
+        if (firstCharacterOfInput != LEFT_BRACKET || lastCharacterOfInput != RIGHT_BRACKET) {
             return input;
         }
 
