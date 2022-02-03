@@ -12,7 +12,7 @@ public class TextUtil {
         if(textNumbers == null) {
             throw new NullPointerException("Null을 전달해서는 안 됩니다.");
         }
-        if (textNumbers.isEmpty()) {
+        if (textNumbers.trim().isEmpty()) {
             return Collections.EMPTY_LIST;
         }
         String regex = ",|:";

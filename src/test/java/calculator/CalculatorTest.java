@@ -9,11 +9,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 class CalculatorTest {
 
     @DisplayName("빈 값을 전달하면 0을 리턴한다")
-    @Test
-    void is_blank_test() {
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    void is_blank_test(String input) {
         // given
         Calculator calculator = new Calculator();
-        String input = "";
 
         // when
         int result = calculator.plus(input);
