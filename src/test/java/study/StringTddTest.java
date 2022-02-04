@@ -1,70 +1,55 @@
 package study;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-
-public class StringTddTest {
+class StringTddTest {
     private StringTdd stringTdd;
 
-    @BeforeEach
-    void setUp() {
-        stringTdd = new StringTdd();
+    @DisplayName("두개 문자를 입력 받았을때 숫자를 두개 리턴한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"1,2", "(1,2)"})
+    void splitWithTwoNumber(String input) {
+        stringTdd = new StringTdd(input);
+        String delimiter = ",";
+
+        assertThat(stringTdd.splitWith(delimiter)).containsExactly(1,2);
     }
 
-    @DisplayName("1,2을 , 로 split 했을 때 1과 2로 잘 분리")
+    @DisplayName("한개 문자를 입력 받았을때 숫자를 한개 리턴한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "(1)"})
+    void splitWithOneNumber(String input) {
+        stringTdd = new StringTdd(input);
+        String delimiter = ",";
+
+        assertThat(stringTdd.splitWith(delimiter)).containsExactly(1);
+    }
+
+    @DisplayName("문자열에서 유효한 위치의 문자를 리턴한다.")
     @Test
-    void split() {
-        // given
-        final String givenInput = "1,2";
+    void findCharacterValidIndex() {
+        final String input = "abc";
+        stringTdd = new StringTdd(input);
+        final int index = 1;
 
-        // when
-        List<Integer> actual = stringTdd.split(givenInput);
-
-        // then
-        assertThat(actual).contains(1, 2);
+        assertThat(stringTdd.findIndex(index)).isEqualTo('b');
     }
 
-    @DisplayName("1만을 포함하는 배열이 반환되는지")
+    @DisplayName("문자열에서 유효하지 않은 문자 위치를 찾으면 에러를 던진다.")
     @Test
-    void split_with_one_element() {
-        // given
-        final String givenInput = "1";
+    void findCharacterWithInvalidIndex() {
+        final String input = "abc";
+        stringTdd = new StringTdd(input);
+        final int index = 100;
 
-        // when
-        List<Integer> actual = stringTdd.split(givenInput);
-
-        // then
-        assertThat(actual).containsExactly(1);
+        assertThatThrownBy(() -> {
+            stringTdd.findIndex(index);
+        }).isInstanceOf(StringIndexOutOfBoundsException.class);
     }
-
-    @DisplayName("(1,2) 값이 주어졌을 때 String의 substring() 메소드를 활용해 () 을 제거하고 1,2를 반환")
-    @Test
-    void split_with_substring() {
-        // given
-        final String givenInput = "(1,2)";
-
-        // when
-        List<Integer> actual = stringTdd.split(givenInput);
-
-        // then
-        assertThat(actual).containsExactly(1, 2);
-    }
-
-    @DisplayName("문자에 괄호가 있으면 괄호를 제거한다.")
-    @Test
-    void subString() {
-        final String givenText = "(3,4)";
-
-        final String actual = stringTdd.subStrings(givenText);
-
-        assertThat(actual).isEqualTo("3,4");
-    }
-
-
 }

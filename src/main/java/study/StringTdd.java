@@ -1,38 +1,66 @@
 package study;
 
+import study.utils.StringUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class StringTdd {
-    private static final String DELIMITER = ",";
-    private static final Character OPEN_BRACE = '(';
-    private static final Character CLOSE_BRACE = ')';
+    public static final String OPEN_BRACKET = "(";
+    public static final String CLOSE_BRACKET = ")";
+    public static final String NOT_NUMBER = "숫자가 아닙니다.";
+    public static final String STRING_INDEX_NOT_FOUND = "문자내 인덱스 위치를 찾을 수 없습니다.";
 
-    private static final String WRONG_INPUT = "잘못된 입력입니다.";
+    private final String input;
 
-    public List<Integer> split(String text) {
-        return Arrays.stream(subStrings(text).split(DELIMITER))
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
-    }
-
-    public String subStrings(String text) {
-        if (Objects.isNull(text)) {
-            throw new IllegalArgumentException(WRONG_INPUT);
+    public StringTdd(String input) {
+        if (StringUtils.isBlank(input)) {
+            throw new IllegalArgumentException();
         }
-        if (hasOpenBrace(text) && hasCloseBrace(text)) {
-            text = text.substring(1, text.length() - 1);
+        this.input = input;
+    }
+
+    public char findIndex(int index) {
+        try {
+            return input.charAt(index);
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new StringIndexOutOfBoundsException(STRING_INDEX_NOT_FOUND);
         }
-        return text;
     }
 
-    private boolean hasCloseBrace(String text) {
-        return text.charAt(text.length() - 1) == CLOSE_BRACE;
+    public int[] splitWith(String delimiter) {
+        if (StringUtils.isBlank(delimiter)) {
+            throw new IllegalArgumentException();
+        }
+        final String trimText = trimText(input);
+        final String[] textNumbers = trimText.split(delimiter);
+        return changeToNumbers(textNumbers);
     }
 
-    private boolean hasOpenBrace(String text) {
-        return text.charAt(0) == OPEN_BRACE;
+    private String trimText(String text) {
+        if (text.contains(OPEN_BRACKET) && text.contains(CLOSE_BRACKET)) {
+            int startBracketIndex = text.indexOf(OPEN_BRACKET);
+            int closeBracketIndex = text.indexOf(CLOSE_BRACKET);
+            return text.substring(startBracketIndex + 1,  closeBracketIndex).trim();
+        }
+        return text.trim();
+    }
+
+    private int[] changeToNumbers(String[] textNumbers) {
+        final int[] numbers = new int[textNumbers.length];
+        for (int i = 0; i < textNumbers.length; i++) {
+            numbers[i] = changeToNumber(textNumbers[i]);
+        }
+        return numbers;
+    }
+
+    private int changeToNumber(String stringNumber) {
+        try {
+            return (Integer.parseInt(stringNumber));
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(NOT_NUMBER);
+        }
     }
 }
