@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class TextUtil {
+    private static final String COMMA_OR_COLON_REGEX = ",|:";
+    private static final String LINE_BREAKING_REGEX = "\\n";
+    private static final String SLASH_REGEX = "//";
+    private static final String EMPTY_STRING = "";
     static List<Integer> split(String textNumbers) throws IllegalArgumentException {
         if(textNumbers == null) {
             throw new IllegalArgumentException("Null을 전달해서는 안 됩니다.");
@@ -15,12 +19,12 @@ public class TextUtil {
         if (textNumbers.trim().isEmpty()) {
             return Collections.EMPTY_LIST;
         }
-        String regex = ",|:";
+        String regex = COMMA_OR_COLON_REGEX;
 
         if (isCustomRegex(textNumbers)) {
-            String[] splittingResults = textNumbers.split("\\n");
+            String[] splittingResults = textNumbers.split(LINE_BREAKING_REGEX);
             textNumbers = splittingResults[1];
-            regex = splittingResults[0].replaceAll("//", "");
+            regex = splittingResults[0].replaceAll(SLASH_REGEX, EMPTY_STRING);
         }
 
         checkException(textNumbers, regex);
