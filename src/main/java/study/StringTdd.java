@@ -28,13 +28,15 @@ public class StringTdd {
     }
 
     private String removeBrackets(String input) {
-        char firstCharacterOfInput = input.charAt(0);
-        char lastCharacterOfInput = input.charAt(input.length() - 1);
+        int firstIndex = 0;
+        int lastIndex = input.length() - 1;
+        char firstCharacterOfInput = input.charAt(firstIndex);
+        char lastCharacterOfInput = input.charAt(lastIndex);
 
         if (firstCharacterOfInput != LEFT_BRACKET || lastCharacterOfInput != RIGHT_BRACKET) {
             return input;
         }
 
-        return input.substring(1, input.length() - 1);
+        return input.substring(firstIndex + 1, lastIndex);
     }
 }
