@@ -11,7 +11,9 @@ public class TextUtil {
     private static final String COMMA_OR_COLON_REGEX = ",|:";
     private static final String LINE_BREAKING_REGEX = "\\n";
     private static final String SLASH_REGEX = "//";
+    private static final String POSITIVE_REGEX = "|0-9";
     private static final String EMPTY_STRING = "";
+
     static List<Integer> split(String textNumbers) throws IllegalArgumentException {
         if(textNumbers == null) {
             throw new IllegalArgumentException("Null을 전달해서는 안 됩니다.");
@@ -26,8 +28,16 @@ public class TextUtil {
             textNumbers = splittingResults[1];
             regex = splittingResults[0].replaceAll(SLASH_REGEX, EMPTY_STRING);
         }
+        StringBuilder exceptionCheckRegex = new StringBuilder();
+        exceptionCheckRegex.append(regex);
+        exceptionCheckRegex.append(POSITIVE_REGEX);
 
-        checkException(textNumbers, regex);
+        Pattern pattern = Pattern.compile(exceptionCheckRegex.toString());
+        Matcher matcher = pattern.matcher(textNumbers);
+
+        if (!matcher.find()) {
+            throw new RuntimeException("구분자, 숫자 이외의 값(음수 포함)을 포함합니다.");
+        }
 
         String[] textNumbersSplitComma = textNumbers.split(regex);
 
@@ -42,19 +52,5 @@ public class TextUtil {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(textNumbers);
         return matcher.find();
-    }
-
-    static void checkException(String textNumbers, String regex) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(regex);
-        sb.append("|0-9");
-        String exceptionRegex = sb.toString();
-
-        Pattern pattern = Pattern.compile(exceptionRegex);
-        Matcher matcher = pattern.matcher(textNumbers);
-
-        if (!matcher.find()) {
-            throw new RuntimeException("구분자, 숫자 이외의 값(음수 포함)을 포함합니다.");
-        }
     }
 }
