@@ -12,7 +12,7 @@ import static calculator.TextUtil.isCustomRegex;
 import static calculator.TextUtil.split;
 
 public class TextUtilTest {
-    @DisplayName("null 값을 전달하면 NullPointerException을 발생시킨다")
+    @DisplayName("null 값을 전달하면 IllegalArgumentException을 던진다")
     @Test
     void is_null_test() {
         // given
@@ -22,7 +22,7 @@ public class TextUtilTest {
 
         // then
         Assertions.assertThatThrownBy(() -> split(input))
-                .isInstanceOf(NullPointerException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Null을 전달해서는 안 됩니다.");
 
     }

@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class TextUtil {
-    static List<Integer> split(String textNumbers) throws NullPointerException {
+    static List<Integer> split(String textNumbers) throws IllegalArgumentException {
         if(textNumbers == null) {
-            throw new NullPointerException("Null을 전달해서는 안 됩니다.");
+            throw new IllegalArgumentException("Null을 전달해서는 안 됩니다.");
         }
         if (textNumbers.trim().isEmpty()) {
             return Collections.EMPTY_LIST;
