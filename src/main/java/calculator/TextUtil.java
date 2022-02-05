@@ -55,6 +55,6 @@ public class TextUtil {
 
         Pattern pattern = Pattern.compile(exceptionCheckRegex.toString());
         Matcher matcher = pattern.matcher(textNumbers);
-        return matcher.find();
+        return !matcher.find();
     }
 }
