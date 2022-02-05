@@ -28,14 +28,8 @@ public class TextUtil {
             textNumbers = splittingResults[1];
             regex = splittingResults[0].replaceAll(SLASH_REGEX, EMPTY_STRING);
         }
-        StringBuilder exceptionCheckRegex = new StringBuilder();
-        exceptionCheckRegex.append(regex);
-        exceptionCheckRegex.append(POSITIVE_REGEX);
 
-        Pattern pattern = Pattern.compile(exceptionCheckRegex.toString());
-        Matcher matcher = pattern.matcher(textNumbers);
-
-        if (!matcher.find()) {
+        if (checkException(textNumbers, regex)) {
             throw new RuntimeException("구분자, 숫자 이외의 값(음수 포함)을 포함합니다.");
         }
 
@@ -50,6 +44,16 @@ public class TextUtil {
     static boolean isCustomRegex(String textNumbers) {
         String regex = "//.+\\n.+";
         Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(textNumbers);
+        return matcher.find();
+    }
+
+    static boolean checkException(String textNumbers, String regex) {
+        StringBuilder exceptionCheckRegex = new StringBuilder();
+        exceptionCheckRegex.append(regex);
+        exceptionCheckRegex.append(POSITIVE_REGEX);
+
+        Pattern pattern = Pattern.compile(exceptionCheckRegex.toString());
         Matcher matcher = pattern.matcher(textNumbers);
         return matcher.find();
     }
