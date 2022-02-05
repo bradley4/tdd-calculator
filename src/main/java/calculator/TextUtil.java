@@ -26,13 +26,11 @@ public class TextUtil {
         checkException(textNumbers, regex);
 
         String[] textNumbersSplitComma = textNumbers.split(regex);
-        List<Integer> result =
-                Arrays.stream(textNumbersSplitComma)
-                        .mapToInt(Integer::parseInt)
-                        .boxed()
-                        .collect(Collectors.toList());
 
-        return result;
+        return Arrays.stream(textNumbersSplitComma)
+                .mapToInt(Integer::parseInt)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     static boolean isCustomRegex(String textNumbers) {
