@@ -26,4 +26,16 @@ public class StringCalculatorTest {
         //then
         assertThat(result).isEqualTo(12);
     }
+
+    @DisplayName("앞의 기본 구분자(쉼표, 콜론)외에 커스텀 구분자를 지정할 수 있다. 커스텀 구분자는 문자열 앞부분의 “//”와 “\\n” 사이에 위치하는 문자를 커스텀 구분자로 사용한다. ")
+    @Test
+    void addNumberByCustomSeparation() {
+        //given
+        String givenString = "//^\\n1^2^3^0^1^2^3";
+
+        //when
+        int result = stringCalculator.addNumberByCustomSeparation(givenString);
+        //then
+        assertThat(result).isEqualTo(12);
+    }
 }
