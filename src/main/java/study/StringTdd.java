@@ -1,20 +1,31 @@
 package study;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class StringTdd {
+    private static final String DELIMITER = ",";
+    private static final Character OPEN_BRACE = '(';
+    private static final Character CLOSE_BRACE = ')';
+
     public List<Integer> split(String inputString) {
-        String[] splitArr = inputString.split(",");
-        List<Integer> arr = new ArrayList();
-        for ( String value : splitArr ) {
-            arr.add(Integer.parseInt(value));
-        }
-        return arr;
+        inputString = removeBracket(inputString);
+        return Arrays.stream(inputString.split(DELIMITER))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 
-     public String removeBracket(String inputString) {
-        return inputString.substring(1,inputString.length()-1);
+    private String removeBracket(String inputString) {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i=0; i<inputString.length(); i++) {
+            Character curChar = inputString.charAt(i);
+            if (curChar != OPEN_BRACE && curChar != CLOSE_BRACE){
+                sb.append(curChar);
+            }
+        }
+        return sb.toString();
     }
 }

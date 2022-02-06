@@ -51,9 +51,9 @@ public class StringTddTest {
         //given
         String givenString = "(1,2)";
         //when
-        String thenString = stringTdd.removeBracket(givenString);
+        List<Integer> strArr = stringTdd.split(givenString);
         //then
-        assertThat(thenString).isEqualTo("1,2");
+        assertThat(strArr).containsExactly(1,2);
     }
 
 
