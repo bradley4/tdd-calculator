@@ -23,6 +23,7 @@ public class StringCalculatorTest {
 
         //when
         int result = stringCalculator.addNumberBySeparation(givenString);
+
         //then
         assertThat(result).isEqualTo(12);
     }
@@ -35,7 +36,15 @@ public class StringCalculatorTest {
 
         //when
         int result = stringCalculator.addNumberByCustomSeparation(givenString);
+
         //then
         assertThat(result).isEqualTo(12);
+    }
+
+    @DisplayName("문자열 계산기에 숫자 이외의 값 또는 음수를 전달하는 경우 RuntimeException 예외를 throw한다.")
+    @Test
+    void throwExceptionIfNotNumber() {
+        //given
+        String givenString = "//^\\n1^2^3^0^1^2^3";
     }
 }
