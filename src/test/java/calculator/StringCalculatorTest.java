@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 public class StringCalculatorTest {
 
@@ -35,7 +35,7 @@ public class StringCalculatorTest {
         String givenString = "//^\\n1^2^3^0^1^2^3";
 
         //when
-        int result = stringCalculator.addNumberByCustomSeparation(givenString);
+        int result = stringCalculator.addNumberBySeparation(givenString);
 
         //then
         assertThat(result).isEqualTo(12);
@@ -45,6 +45,10 @@ public class StringCalculatorTest {
     @Test
     void throwExceptionIfNotNumber() {
         //given
-        String givenString = "//^\\n1^2^3^0^1^2^3";
+        String givenString = "//^\\n1^2^3^a^0^^1^abc^2^3";
+
+        //when, then
+        assertThatThrownBy(() -> stringCalculator.addNumberBySeparation(givenString))
+                .isInstanceOf(RuntimeException.class);
     }
 }
