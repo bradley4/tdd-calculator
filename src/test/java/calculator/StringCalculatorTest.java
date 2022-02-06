@@ -22,7 +22,7 @@ public class StringCalculatorTest {
         String givenString = "1,2:3:0,:1,2,3";
 
         //when
-        int result = stringCalculator.addNumberBySeparation(givenString);
+        int result = stringCalculator.getSum(givenString);
 
         //then
         assertThat(result).isEqualTo(12);
@@ -35,20 +35,31 @@ public class StringCalculatorTest {
         String givenString = "//^\\n1^2^3^0^1^2^3";
 
         //when
-        int result = stringCalculator.addNumberBySeparation(givenString);
+        int result = stringCalculator.getSum(givenString);
 
         //then
         assertThat(result).isEqualTo(12);
     }
 
-    @DisplayName("문자열 계산기에 숫자 이외의 값 또는 음수를 전달하는 경우 RuntimeException 예외를 throw한다.")
+    @DisplayName("문자열 계산기에 음수를 전달하는 경우 RuntimeException 예외를 throw한다.")
     @Test
-    void throwExceptionIfNotNumber() {
+    void throwExceptionIfNegative() {
         //given
-        String givenString = "//^\\n1^2^3^a^0^^1^abc^2^3";
+        String givenString = "//^\\n1^-2^3^^0^^1^2^3";
 
         //when, then
-        assertThatThrownBy(() -> stringCalculator.addNumberBySeparation(givenString))
+        assertThatThrownBy(() -> stringCalculator.getSum(givenString))
+                .isInstanceOf(RuntimeException.class);
+    }
+
+    @DisplayName("문자열 계산기에 숫자 이외의 값을 전달하는 경우 RuntimeException 예외를 throw한다.")
+    @Test
+    void throwExceptionIfNotNumeric() {
+        //given
+        String givenString = "//^\\n1^2^K^^aaKO^^1^2^3";
+
+        //when, then
+        assertThatThrownBy(() -> stringCalculator.getSum(givenString))
                 .isInstanceOf(RuntimeException.class);
     }
 }

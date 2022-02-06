@@ -5,42 +5,41 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.regex.Pattern;
 
 public class StringCalculator {
+    private static final String COMMA = ",";
+    private static final String COLON = ":";
+    private static final String START_DELIMITER = "//";
+    private static final String END_DELIMITER = "\\n";
 
-    public int addNumberBySeparation(String givenString) {
-        if (givenString.contains("//") && givenString.contains("\\n")) {
-            return addNumberByCustomSeparation(givenString);
+    public int getSum(String givenString) {
+        if (givenString.contains(START_DELIMITER) && givenString.contains(END_DELIMITER)) {
+            return getSumByCustomDelimiter(givenString);
         }
-        givenString = givenString.replaceAll(":",",");
-        return getSumByDelimeter(givenString, ",");
+        givenString = givenString.replaceAll(COLON,COMMA);
+        return addSeparatedNumberByDelimiter(givenString, COMMA);
     }
 
-    private int addNumberByCustomSeparation(String givenString) {
+    private int getSumByCustomDelimiter(String givenString) {
 
-        int startIndex = givenString.indexOf("//");
-        int endIndex = givenString.indexOf("\\n");
+        int startIndex = givenString.indexOf(START_DELIMITER);
+        int endIndex = givenString.indexOf(END_DELIMITER);
 
-        String delimeter = givenString.substring(startIndex+2, endIndex);
-        String toBeSeperated = givenString.substring(endIndex+2);
+        String customDelimiter = givenString.substring(startIndex+START_DELIMITER.length(), endIndex);
+        String toBeSeperated = givenString.substring(endIndex+END_DELIMITER.length());
 
-        return getSumByDelimeter(toBeSeperated, delimeter);
+        return addSeparatedNumberByDelimiter(toBeSeperated, customDelimiter);
     }
 
-    private int getSumByDelimeter(String givenString, String regex) {
-        String[] list = givenString.split(Pattern.quote(regex));
+    private int addSeparatedNumberByDelimiter(String givenString, String delimiter) {
+        String[] list = givenString.split(Pattern.quote(delimiter));
         int sum = 0;
         for ( String stringNumber : list ) {
-            if (StringUtils.isAlpha(stringNumber)) {
-                throw new RuntimeException();
-            }
-
-            if (StringUtils.isEmpty(stringNumber))
+            if (StringUtils.isEmpty(stringNumber)){
                 continue;
-
-            Integer num = Integer.parseInt(stringNumber);
-            if (num < 0) {
+            }
+            if (!StringUtils.isNumeric(stringNumber)) {
                 throw new RuntimeException();
             }
-            sum += num;
+            sum += Integer.parseInt(stringNumber);
         }
         return sum;
     }
