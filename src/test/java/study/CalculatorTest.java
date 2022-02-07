@@ -15,7 +15,6 @@ public class CalculatorTest {
         calculator = new Calculator();
     }
 
-
     @DisplayName("두 수를 더해서 합을 구한다.")
     @Test
     void plus() {

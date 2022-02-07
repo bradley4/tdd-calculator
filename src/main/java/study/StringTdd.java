@@ -20,10 +20,10 @@ public class StringTdd {
 
         StringBuilder sb = new StringBuilder();
 
-        for (int i=0; i<inputString.length(); i++) {
-            Character curChar = inputString.charAt(i);
-            if (curChar != OPEN_BRACE && curChar != CLOSE_BRACE){
-                sb.append(curChar);
+        for (int i = 0; i < inputString.length(); i++) {
+            Character currentCharacter = inputString.charAt(i);
+            if (currentCharacter != OPEN_BRACE && currentCharacter != CLOSE_BRACE){
+                sb.append(currentCharacter);
             }
         }
         return sb.toString();

@@ -1,8 +1,9 @@
 package calculator;
 
-import org.apache.commons.lang3.StringUtils;
-
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class StringCalculator {
     private static final String COMMA = ",";
@@ -10,37 +11,57 @@ public class StringCalculator {
     private static final String START_DELIMITER = "//";
     private static final String END_DELIMITER = "\\n";
 
-    public int getSum(String givenString) {
-        if (givenString.contains(START_DELIMITER) && givenString.contains(END_DELIMITER)) {
-            return getSumByCustomDelimiter(givenString);
+    public int sum(String textNumbers) {
+        if (textNumbers == null) {
+            return 0;
         }
-        givenString = givenString.replaceAll(COLON,COMMA);
-        return addSeparatedNumberByDelimiter(givenString, COMMA);
+        if (textNumbers.contains(START_DELIMITER) && textNumbers.contains(END_DELIMITER)) {
+            return getSumByCustomDelimiter(textNumbers);
+        }
+        textNumbers = textNumbers.replaceAll(COLON,COMMA);
+        return addTextNumber(textNumbers, COMMA);
     }
 
-    private int getSumByCustomDelimiter(String givenString) {
-
-        int startIndex = givenString.indexOf(START_DELIMITER);
-        int endIndex = givenString.indexOf(END_DELIMITER);
-
-        String customDelimiter = givenString.substring(startIndex+START_DELIMITER.length(), endIndex);
-        String toBeSeperated = givenString.substring(endIndex+END_DELIMITER.length());
-
-        return addSeparatedNumberByDelimiter(toBeSeperated, customDelimiter);
+    private int getSumByCustomDelimiter(String textNumbers) {
+        String customDelimiter = getCustomDelimiter(textNumbers);
+        textNumbers = removeStartAndEndDelimiter(textNumbers);
+        return addTextNumber(textNumbers, customDelimiter);
     }
 
-    private int addSeparatedNumberByDelimiter(String givenString, String delimiter) {
-        String[] list = givenString.split(Pattern.quote(delimiter));
+    private String removeStartAndEndDelimiter(String textNumbers) {
+        String[] splitByEndDelimiter = separateTextNumbersByDelimiter(textNumbers, END_DELIMITER);
+        return splitByEndDelimiter[1];
+    }
+
+    private String getCustomDelimiter(String textNumbers) {
+        int startIndex = textNumbers.indexOf(START_DELIMITER);
+        int endIndex = textNumbers.indexOf(END_DELIMITER);
+        String customDelimiter = textNumbers.substring(startIndex+START_DELIMITER.length(), endIndex);
+        return customDelimiter;
+    }
+
+    private int addTextNumber(String textNumbers, String delimiter) {
+        String[] stringNumberArr = separateTextNumbersByDelimiter(textNumbers, delimiter);
+        List<String> stringNumberList = Arrays.stream(stringNumberArr)
+                                            .filter(stringNumber -> stringNumber != null && stringNumber.length() != 0)
+                                            .collect(Collectors.toList());
         int sum = 0;
-        for ( String stringNumber : list ) {
-            if (StringUtils.isEmpty(stringNumber)){
-                continue;
-            }
-            if (!StringUtils.isNumeric(stringNumber)) {
-                throw new RuntimeException();
-            }
+        for (String stringNumber : stringNumberList) {
+            checkNumeric(stringNumber);
             sum += Integer.parseInt(stringNumber);
         }
         return sum;
+    }
+
+    private void checkNumeric(String stringNumber){
+        Character charNumber = stringNumber.charAt(0);
+        if (!Character.isDigit(charNumber)) {
+            throw new RuntimeException("숫자 이외의 값 또는 음수는 전달할 수 없습니다.");
+        }
+    }
+
+    private String[] separateTextNumbersByDelimiter(String textNumbers, String delimiter) {
+        Pattern pattern = Pattern.compile("\\"+delimiter);
+        return pattern.split(textNumbers);
     }
 }
