@@ -18,12 +18,12 @@ public class Study1StringTest {
     @DisplayName("\"1,2\"을 , 로 split 했을 때 1과 2로 잘 분리되는지 확인하는 학습 테스트를 구현")
     @Test
     void splitTest() {
-        // given
+        // given - 준비 : 테스트 전 필요한 값들 준비. 테스트에 사용하는 변수, 입력값 등등
         String testString = "1,2";
-        // when
-        String[] result = study1String.splitComma(testString);
         String[] expected = new String[]{"1", "2"};
-        // then
+        // when - 실행 : 실제 테스트 하는 부분
+        String[] result = study1String.splitComma(testString);
+        // then - 검증
         assertThat(result).isEqualTo(expected);
     }
 
