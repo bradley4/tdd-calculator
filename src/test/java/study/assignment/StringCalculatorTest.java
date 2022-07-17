@@ -3,6 +3,7 @@ package study.assignment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,9 +17,10 @@ public class StringCalculatorTest {
         stringCalculator = new StringCalculator();
     }
 
+    // @NullAndEmptySource null과 빈값을 테스트하도록 한다. (@NullSource / @EmptySource 도 있음)
     @DisplayName("쉼표(,) 또는 콜론(:)을 구분자로 가지는 문자열을 전달하는 경우 구분자를 기준으로 분리한 각 숫자의 합을 반환 - \"\" => 0")
     @ParameterizedTest
-    @ValueSource(strings = {""})
+    @NullAndEmptySource
     void sumStringZerotest(String values) {
         int result = stringCalculator.sumString(values);
 
