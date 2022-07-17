@@ -12,55 +12,55 @@ public class StringCalculator {
     private static final String LEFT_DELIMITER = "//";
     private static final String RIGHT_DELIMITER = "\n";
 
-    public int sumString(String input) {
-        if (input == null || "".equals(input)) {
+    public int sumString(String stringNumbers) {
+        if (stringNumbers == null || "".equals(stringNumbers)) {
             return 0;
         }
-        if (input.contains(LEFT_DELIMITER) && input.contains(RIGHT_DELIMITER)) {
-            return sumStringWithCustomDelim(input);
+        if (stringNumbers.contains(LEFT_DELIMITER) && stringNumbers.contains(RIGHT_DELIMITER)) {
+            return sumStringWithCustomDelim(stringNumbers);
         }
 
-        input = input.replaceAll(COLON, COMMA);
-        String[] commaSplitArray = input.split(COMMA);
+        stringNumbers = stringNumbers.replaceAll(COLON, COMMA);
+        String[] splitStringNumbers = stringNumbers.split(COMMA);
         int result = 0;
-        for (String splitInput : commaSplitArray) {
-            checkInput(splitInput);
-            result += Integer.parseInt(splitInput);
+        for (String stringNumber : splitStringNumbers) {
+            checkStringNumber(stringNumber);
+            result += Integer.parseInt(stringNumber);
         }
         return result;
     }
 
-    private int sumStringWithCustomDelim(String input) {
-        String customDelim = findCustomDelim(input);
-        String inputWithoutDelim = findInput(input);
-        String[] commaSplitArray = inputWithoutDelim.split(customDelim);
+    private int sumStringWithCustomDelim(String stringNumbersWithCustomDelim) {
+        String customDelim = findCustomDelim(stringNumbersWithCustomDelim);
+        String stringNumbers = findStringNumberWithoutDelim(stringNumbersWithCustomDelim);
+        String[] splitStringNumbers = stringNumbers.split(customDelim);
         int result = 0;
-        for (String splitInput : commaSplitArray) {
-            checkInput(splitInput);
-            result += Integer.parseInt(splitInput);
+        for (String stringNumber : splitStringNumbers) {
+            checkStringNumber(stringNumber);
+            result += Integer.parseInt(stringNumber);
         }
 
         return result;
     }
 
-    private String findCustomDelim(String input) {
-        int start = input.indexOf(LEFT_DELIMITER) + LEFT_DELIMITER.length();
-        int end = input.indexOf(RIGHT_DELIMITER);
+    private String findCustomDelim(String stringNumbersWithDelim) {
+        int startIndex = stringNumbersWithDelim.indexOf(LEFT_DELIMITER) + LEFT_DELIMITER.length();
+        int endIndex = stringNumbersWithDelim.indexOf(RIGHT_DELIMITER);
 
-        return input.substring(start, end);
+        return stringNumbersWithDelim.substring(startIndex, endIndex);
     }
 
-    private String findInput(String input) {
-        int start = input.indexOf(RIGHT_DELIMITER) + RIGHT_DELIMITER.length();
+    private String findStringNumberWithoutDelim(String stringNubersWithDelim) {
+        int startIndex = stringNubersWithDelim.indexOf(RIGHT_DELIMITER) + RIGHT_DELIMITER.length();
 
-        return input.substring(start);
+        return stringNubersWithDelim.substring(startIndex);
     }
 
-    private void checkInput(String splitInput){
-        char[] charSplitInputArray = splitInput.toCharArray();
+    private void checkStringNumber(String stringNumber){
+        char[] characterNumbers = stringNumber.toCharArray();
 
-        for (char charSplitInput : charSplitInputArray) {
-            if (!Character.isDigit(charSplitInput)) {
+        for (char characterNumber : characterNumbers) {
+            if (!Character.isDigit(characterNumber)) {
                 throw new RuntimeException();
             }
         }
