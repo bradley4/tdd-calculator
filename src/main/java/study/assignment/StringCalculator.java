@@ -3,7 +3,7 @@ package study.assignment;
 public class StringCalculator {
 
     public int sumString(String input) {
-        if ("".equals(input)) {
+        if (input == null || "".equals(input)) {
             return 0;
         }
         if (input.contains("//") && input.contains("\n")) {
