@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class StringCalculator {
 
-    public static int stringToNumberMultiply(String text) {
+    public static int stringToNumberSum(String text) {
 
         String validatedText = validateText(text);
 
