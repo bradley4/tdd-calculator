@@ -50,7 +50,9 @@ public class StringCalculatorTest {
     @ValueSource(strings = {"helloWorld", "-123"})
     void sumStringExceptionTest(String values) {
         assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> {
-            int result = stringCalculator.sumString(values);
+            // 사용되지 않는 변수는 선언하지 않기!
+            // int result = stringCalculator.sumString(values);
+            stringCalculator.sumString(values);
         });
     }
 
